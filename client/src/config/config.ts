@@ -1,7 +1,7 @@
 // 환경변수 설정
 export const config = {
-  // API 기본 URL
-  API_BASE_URL: process.env.REACT_APP_API_BASE_URL || 'https://global-coffee-chat.vercel.app',
+  // API 기본 URL (Render 백엔드)
+  API_BASE_URL: process.env.REACT_APP_API_BASE_URL || 'https://tripchat-backend.onrender.com',
   
   // 사이트 정보
   SITE_NAME: process.env.REACT_APP_SITE_NAME || '트립챗',

@@ -83,6 +83,19 @@ npm run dev:all
 npm run client:install
 ```
 
+### 5. 환경 변수 설정
+
+**클라이언트 (client/.env):**
+```bash
+REACT_APP_API_BASE_URL=https://tripchat-backend.onrender.com
+```
+
+**서버 (.env):**
+```bash
+DATABASE_URL="postgresql://postgres:password@localhost:5432/tokyo_coffee_chats"
+PORT=5000
+```
+
 ## 📁 프로젝트 구조
 
 ```
