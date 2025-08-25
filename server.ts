@@ -10,7 +10,29 @@ const PORT = process.env.PORT || 5000;
 const prisma = new PrismaClient();
 
 // 미들웨어
-app.use(cors());
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : [
+        'https://global-coffee-chat.vercel.app',
+        'https://global-coffee-chat-git-main-rkdwoals159.vercel.app',
+        'http://localhost:3000',
+        'http://localhost:3001'
+    ];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 app.use(express.json());
 
 // 커피챗 데이터 (실제로는 데이터베이스를 사용해야 합니다)
@@ -31,6 +53,9 @@ interface CoffeeChat {
     tags: string[];
     status: 'OPEN' | 'FULL' | 'COMPLETED';
 }
+
+// CORS preflight 요청 처리
+app.options('*', cors());
 
 // API 엔드포인트
 
