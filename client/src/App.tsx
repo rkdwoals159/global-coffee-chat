@@ -1,13 +1,19 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import CoffeeChatList from "./pages/CoffeeChatList";
-import CoffeeChatDetail from "./pages/CoffeeChatDetail";
-import CreateCoffeeChat from "./pages/CreateCoffeeChat";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { validateConfig } from './config/config';
+import Header from './components/Header';
+import Home from './pages/Home';
+import CoffeeChatList from './pages/CoffeeChatList';
+import CoffeeChatDetail from './pages/CoffeeChatDetail';
+import CreateCoffeeChat from './pages/CreateCoffeeChat';
+import './App.css';
 
 function App() {
+  useEffect(() => {
+    // 환경변수 설정 검증
+    validateConfig();
+  }, []);
+
   return (
     <Router>
       <div className="App">
