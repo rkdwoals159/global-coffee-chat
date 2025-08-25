@@ -1,4 +1,4 @@
-import { getCoffeeChatById, joinCoffeeChat } from '../data/coffeeChats.js';
+import { getCoffeeChatById, joinCoffeeChat } from '../data/coffeeChats.mjs';
 
 export default function handler(req, res) {
   const { id } = req.query;

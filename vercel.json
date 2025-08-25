@@ -1,40 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.mjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "functions": {
-    "api/coffee-chats/index.mjs": {
-      "maxDuration": 10
-    },
-    "api/coffee-chats/[id].mjs": {
-      "maxDuration": 10
-    },
-    "api/coffee-chats/country/[country].mjs": {
-      "maxDuration": 10
-    },
-    "api/coffee-chats/job/[job].mjs": {
-      "maxDuration": 10
-    }
+    "api/coffee-chats/index.mjs": {},
+    "api/coffee-chats/[id].mjs": {},
+    "api/coffee-chats/country/[country].mjs": {},
+    "api/coffee-chats/job/[job].mjs": {}
   }
 }

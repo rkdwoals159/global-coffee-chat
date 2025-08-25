@@ -1,4 +1,4 @@
-import { getCoffeeChats, addCoffeeChat } from "../data/coffeeChats.js";
+import { getCoffeeChats, addCoffeeChat } from '../data/coffeeChats.mjs';
 
 export default function handler(req, res) {
   // CORS 헤더 설정
