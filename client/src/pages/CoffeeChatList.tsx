@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./CoffeeChatList.css";
@@ -33,34 +33,34 @@ const CoffeeChatList: React.FC = () => {
     fetchCoffeeChats();
   }, []);
 
-  const filterChats = useCallback(() => {
-    let filtered = coffeeChats;
-
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (chat) =>
-          chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          chat.host.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (selectedCountry) {
-      filtered = filtered.filter((chat) => chat.country === selectedCountry);
-    }
-
-    if (selectedJob) {
-      filtered = filtered.filter((chat) =>
-        chat.job.toLowerCase().includes(selectedJob.toLowerCase())
-      );
-    }
-
-    setFilteredChats(filtered);
-  }, [coffeeChats, searchTerm, selectedCountry, selectedJob]);
-
   useEffect(() => {
+    const filterChats = () => {
+      let filtered = coffeeChats;
+
+      if (searchTerm) {
+        filtered = filtered.filter(
+          (chat) =>
+            chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            chat.host.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      if (selectedCountry) {
+        filtered = filtered.filter((chat) => chat.country === selectedCountry);
+      }
+
+      if (selectedJob) {
+        filtered = filtered.filter((chat) =>
+          chat.job.toLowerCase().includes(selectedJob.toLowerCase())
+        );
+      }
+
+      setFilteredChats(filtered);
+    };
+
     filterChats();
-  }, [filterChats]);
+  }, [coffeeChats, searchTerm, selectedCountry, selectedJob]);
 
   const fetchCoffeeChats = async () => {
     try {

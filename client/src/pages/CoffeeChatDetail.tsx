@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CoffeeChatDetail.css";
@@ -29,24 +29,24 @@ const CoffeeChatDetail: React.FC = () => {
   const [joining, setJoining] = useState(false);
   const [message, setMessage] = useState("");
 
-  const fetchCoffeeChatDetail = async () => {
-    try {
-      const response = await axios.get(
-        `https://tokyo-3j7eqskv3-rkdwoals159s-projects.vercel.app/api/coffee-chats/${id}`
-      );
-      setCoffeeChat(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("커피챗 상세 정보를 불러오는데 실패했습니다:", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (id) {
+      const fetchCoffeeChatDetail = async () => {
+        try {
+          const response = await axios.get(
+            `https://tokyo-3j7eqskv3-rkdwoals159s-projects.vercel.app/api/coffee-chats/${id}`
+          );
+          setCoffeeChat(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.error("커피챗 상세 정보를 불러오는데 실패했습니다:", error);
+          setLoading(false);
+        }
+      };
+      
       fetchCoffeeChatDetail();
     }
-  }, [id, fetchCoffeeChatDetail]);
+  }, [id]);
 
   const handleJoin = async () => {
     if (!coffeeChat) return;
