@@ -35,24 +35,24 @@ const CoffeeChatList: React.FC = () => {
       try {
         setLoading(true);
         const response = await coffeeChatAPI.getAll();
-        
+
         // 응답 데이터 구조 확인 및 안전한 처리
         const data = response.data;
-        console.log('API 응답 데이터:', data);
-        
+        console.log("API 응답 데이터:", data);
+
         if (Array.isArray(data)) {
           setCoffeeChats(data);
           setFilteredChats(data);
           setError(null);
         } else {
-          console.error('API 응답이 배열이 아닙니다:', data);
-          setError('API 응답 데이터 형식이 올바르지 않습니다.');
+          console.error("API 응답이 배열이 아닙니다:", data);
+          setError("API 응답 데이터 형식이 올바르지 않습니다.");
           setCoffeeChats([]);
           setFilteredChats([]);
         }
       } catch (err) {
-        setError('커피챗 목록을 불러오는 중 오류가 발생했습니다.');
-        console.error('커피챗 목록 조회 오류:', err);
+        setError("커피챗 목록을 불러오는 중 오류가 발생했습니다.");
+        console.error("커피챗 목록 조회 오류:", err);
         setCoffeeChats([]);
         setFilteredChats([]);
       } finally {
