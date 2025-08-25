@@ -66,6 +66,37 @@ async function main() {
         });
     }
 
+    // 익명 커뮤니티 샘플 데이터
+    const anonymousPosts = [
+        {
+            title: '해외 취업 준비 중인데 조언 부탁드려요',
+            content: '현재 일본 IT 업계 취업을 준비하고 있는데, 어떤 준비를 하면 좋을까요? 일본어 공부는 어느 정도 수준까지 해야 할까요?',
+            nickname: '일본취업준비생',
+            password: Buffer.from('1234').toString('base64'),
+            category: '취업'
+        },
+        {
+            title: '도쿄 생활비 얼마나 들까요?',
+            content: '도쿄에서 1인 가구로 살면 월 생활비가 얼마나 들까요? 집세, 식비, 교통비 등 구체적으로 알려주세요.',
+            nickname: '도쿄생활궁금',
+            password: Buffer.from('5678').toString('base64'),
+            category: '생활'
+        },
+        {
+            title: '익명으로 고민 상담해요',
+            content: '해외에서 일하다 보니 한국 친구들과 연락이 뜸어지고 외로워요. 어떻게 하면 좋을까요?',
+            nickname: '외로운해외파',
+            password: Buffer.from('9999').toString('base64'),
+            category: '일반'
+        }
+    ];
+
+    for (const post of anonymousPosts) {
+        await prisma.anonymousPost.create({
+            data: post
+        });
+    }
+
     console.log('데이터베이스 시드 완료!');
 }
 

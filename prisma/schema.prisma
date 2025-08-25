@@ -34,6 +34,18 @@ model CoffeeChat {
   updatedAt           DateTime @updatedAt
 }
 
+model AnonymousPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  nickname    String
+  password    String   // 해시된 비밀번호
+  category    String   @default("일반") // 카테고리 (일반, 취업, 생활, 기타)
+  viewCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 enum ChatStatus {
   OPEN
   FULL
