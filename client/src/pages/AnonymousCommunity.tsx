@@ -123,15 +123,11 @@ const AnonymousCommunity: React.FC = () => {
     return sorted;
   }, [posts, searchTerm, sortKey, sortOrder]);
 
-  const toggleSort = (_key: keyof AnonymousPost) => {};
-
   // 검색 디바운스 적용
   useEffect(() => {
     const id = setTimeout(() => setSearchTerm(searchInput), 300);
     return () => clearTimeout(id);
   }, [searchInput]);
-
-  const isNewPost = (_dateString: string) => false;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
