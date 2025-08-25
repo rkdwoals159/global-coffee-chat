@@ -1,18 +1,4 @@
 {
-  "functions": {
-    "api/coffee-chats/index.js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/coffee-chats/[id].js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/coffee-chats/country/[country].js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/coffee-chats/job/[job].js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
