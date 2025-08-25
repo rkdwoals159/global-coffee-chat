@@ -1,19 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { config } from "../config/config";
 import { Clock, Eye, X } from "lucide-react";
-
-interface AnonymousPost {
-  id: string;
-  title: string;
-  content: string;
-  nickname: string;
-  category: string;
-  viewCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { anonymousPostAPI } from "../services/api";
+import { AnonymousPost } from "../types";
 
 const AnonymousPostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,9 +18,7 @@ const AnonymousPostDetail: React.FC = () => {
   const fetchPost = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get<AnonymousPost>(
-        `${config.API_BASE_URL}/api/anonymous-posts/${id}`
-      );
+      const response = await anonymousPostAPI.getById(id!);
       setPost(response.data);
     } catch (error: any) {
       console.error("게시글 조회 오류:", error);
@@ -71,9 +58,7 @@ const AnonymousPostDetail: React.FC = () => {
       setDeleting(true);
       setError("");
 
-      await axios.delete(`${config.API_BASE_URL}/api/anonymous-posts/${id}`, {
-        data: { password: deletePassword },
-      });
+      await anonymousPostAPI.delete(id!, deletePassword);
 
       // 성공 시 익명 커뮤니티로 이동
       navigate("/anonymous");

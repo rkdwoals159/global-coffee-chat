@@ -8,7 +8,10 @@ import {
   JoinCoffeeChatResponse,
   CoffeeChatFilters,
   PaginationParams,
-  PaginatedResponse
+  PaginatedResponse,
+  AnonymousPost,
+  CreateAnonymousPostRequest,
+  PostsResponse
 } from '../types/api';
 
 // API 기본 설정
@@ -72,6 +75,25 @@ export const coffeeChatAPI = {
   // 직업별 필터링
   filterByJob: (job: string) =>
     api.get<CoffeeChat[]>(config.API_ENDPOINTS.FILTER_BY_JOB(job)),
+};
+
+// 익명게시글 관련 API 함수들
+export const anonymousPostAPI = {
+  // 모든 익명게시글 조회
+  getAll: (params?: { category?: string; page?: number; limit?: number }) =>
+    api.get<PostsResponse>('/api/anonymous-posts', { params }),
+
+  // 특정 익명게시글 조회
+  getById: (id: string) =>
+    api.get<AnonymousPost>(`/api/anonymous-posts/${id}`),
+
+  // 새로운 익명게시글 생성
+  create: (data: CreateAnonymousPostRequest) =>
+    api.post<AnonymousPost>('/api/anonymous-posts', data),
+
+  // 익명게시글 삭제
+  delete: (id: string, password: string) =>
+    api.delete<{ message: string }>(`/api/anonymous-posts/${id}`, { data: { password } }),
 };
 
 export default api;

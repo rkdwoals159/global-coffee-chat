@@ -90,3 +90,30 @@ export interface PaginatedResponse<T> {
         totalPages: number;
     };
 }
+
+// 익명게시글 관련 타입들
+export interface AnonymousPost {
+    id: string;
+    title: string;
+    content: string;
+    nickname: string;
+    category: string;
+    viewCount: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreateAnonymousPostRequest {
+    title: string;
+    content: string;
+    nickname: string;
+    password: string;
+    category?: string;
+}
+
+export interface PostsResponse {
+    posts: AnonymousPost[];
+    total: number;
+    page: number;
+    totalPages: number;
+}

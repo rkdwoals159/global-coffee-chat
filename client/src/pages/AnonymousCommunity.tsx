@@ -1,25 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { config } from "../config/config";
 import { Plus, MessageSquare, ChevronRight, Search, X } from "lucide-react";
-
-interface AnonymousPost {
-  id: string;
-  title: string;
-  nickname: string;
-  category: string;
-  viewCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface PostsResponse {
-  posts: AnonymousPost[];
-  total: number;
-  page: number;
-  totalPages: number;
-}
+import { anonymousPostAPI } from "../services/api";
+import { AnonymousPost } from "../types";
 
 const AnonymousCommunity: React.FC = () => {
   const [posts, setPosts] = useState<AnonymousPost[]>([]);
@@ -40,16 +23,11 @@ const AnonymousCommunity: React.FC = () => {
     try {
       setLoading(true);
       const category = selectedCategory === "전체" ? "" : selectedCategory;
-      const response = await axios.get<PostsResponse>(
-        `${config.API_BASE_URL}/api/anonymous-posts`,
-        {
-          params: {
-            page: currentPage,
-            limit: pageSize,
-            category,
-          },
-        }
-      );
+      const response = await anonymousPostAPI.getAll({
+        category,
+        page: currentPage,
+        limit: pageSize,
+      });
       setPosts(response.data.posts);
       setTotalPages(response.data.totalPages);
     } catch (error) {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { config } from "../config/config";
+import { anonymousPostAPI } from "../services/api";
 
 const WriteAnonymousPost: React.FC = () => {
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ const WriteAnonymousPost: React.FC = () => {
       setLoading(true);
       setError("");
 
-      await axios.post(`${config.API_BASE_URL}/api/anonymous-posts`, formData);
+      await anonymousPostAPI.create(formData);
 
       // 성공 시 익명 커뮤니티로 이동
       navigate("/anonymous");
