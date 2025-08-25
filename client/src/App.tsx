@@ -6,6 +6,9 @@ import Home from "./pages/Home";
 import CoffeeChatList from "./pages/CoffeeChatList";
 import CoffeeChatDetail from "./pages/CoffeeChatDetail";
 import CreateCoffeeChat from "./pages/CreateCoffeeChat";
+import AnonymousCommunity from "./pages/AnonymousCommunity";
+import WriteAnonymousPost from "./pages/WriteAnonymousPost";
+import AnonymousPostDetail from "./pages/AnonymousPostDetail";
 
 function App() {
   useEffect(() => {
@@ -23,6 +26,9 @@ function App() {
             <Route path="/coffee-chats" element={<CoffeeChatList />} />
             <Route path="/coffee-chats/:id" element={<CoffeeChatDetail />} />
             <Route path="/create" element={<CreateCoffeeChat />} />
+            <Route path="/anonymous" element={<AnonymousCommunity />} />
+            <Route path="/anonymous/write" element={<WriteAnonymousPost />} />
+            <Route path="/anonymous/:id" element={<AnonymousPostDetail />} />
           </Routes>
         </main>
       </div>
