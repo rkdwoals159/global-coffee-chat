@@ -296,10 +296,10 @@ const AnonymousCommunity: React.FC = () => {
                       <td className="hidden sm:table-cell p-4">
                         <div className="h-6 w-24 bg-slate-100 rounded" />
                       </td>
-                      <td className="hidden sm:table-cell p-4 text-right">
-                        <div className="h-6 w-12 bg-slate-100 rounded inline-block" />
+                      <td className="hidden sm:table-cell p-4 text-center">
+                        <div className="h-6 w-16 bg-slate-100 rounded inline-block" />
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-4 text-center">
                         <div className="h-6 w-24 bg-slate-100 rounded inline-block" />
                       </td>
                     </tr>
@@ -374,6 +374,16 @@ const AnonymousCommunity: React.FC = () => {
                             NEW
                           </span>
                         )} */}
+                      </td>
+                      <td className="hidden sm:table-cell p-4 align-middle text-center text-slate-600">
+                        <span className="inline-flex items-center gap-1">
+                          익명
+                        </span>
+                      </td>
+                      <td className="hidden sm:table-cell p-4 align-middle text-center text-slate-600">
+                        <span className="inline-flex items-center gap-1">
+                          {post.viewCount || 0}
+                        </span>
                       </td>
                       <td className="p-4 sm:table-cell align-middle text-center text-slate-600">
                         <span className="inline-flex items-center gap-1">
