@@ -11,6 +11,7 @@ const Header: React.FC = () => {
     { path: "/", label: "홈", icon: "🏠" },
     { path: "/coffee-chats", label: "트립챗 목록", icon: "☕" },
     { path: "/create", label: "트립챗 만들기", icon: "✨" },
+    { path: "/anonymous", label: "커뮤니티", icon: "🎭" },
   ];
 
   return (
