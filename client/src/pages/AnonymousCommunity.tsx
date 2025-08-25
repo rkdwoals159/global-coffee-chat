@@ -153,7 +153,7 @@ const AnonymousCommunity: React.FC = () => {
         </div>
 
         {/* 툴바 */}
-        <div className="mb-6 p-4 bg-white border border-slate-200 rounded-xl p-5 md:p-6">
+        <div className="mb-6 p-4 bg-white border border-slate-200 rounded-xl md:p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
             <div className="relative flex-1 min-w-0">
               <input
