@@ -110,7 +110,7 @@ https://tripchat-backend.onrender.com/api/coffee-chats
 ### **5-2. 프론트엔드 테스트**
 
 - Vercel에서 프론트엔드 재배포 완료 대기
-- 커피챗 목록 페이지에서 데이터 로딩 확인
+- 트립챗 목록 페이지에서 데이터 로딩 확인
 
 ## 🔍 **6단계: 문제 해결**
 

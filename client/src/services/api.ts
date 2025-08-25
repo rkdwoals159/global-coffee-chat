@@ -45,23 +45,23 @@ api.interceptors.response.use(
   }
 );
 
-// 커피챗 관련 API 함수들
+// 트립챗 관련 API 함수들
 export const coffeeChatAPI = {
-  // 모든 커피챗 조회
+  // 모든 트립챗 조회
   getAll: (filters?: CoffeeChatFilters, pagination?: PaginationParams) =>
     api.get<CoffeeChat[] | PaginatedResponse<CoffeeChat>>(config.API_ENDPOINTS.COFFEE_CHATS, {
       params: { ...filters, ...pagination }
     }),
 
-  // 특정 커피챗 조회
+  // 특정 트립챗 조회
   getById: (id: string) =>
     api.get<CoffeeChat>(config.API_ENDPOINTS.COFFEE_CHAT_BY_ID(id)),
 
-  // 새로운 커피챗 생성
+  // 새로운 트립챗 생성
   create: (data: CreateCoffeeChatRequest) =>
     api.post<CreateCoffeeChatResponse>(config.API_ENDPOINTS.COFFEE_CHATS, data),
 
-  // 커피챗 참여
+  // 트립챗 참여
   join: (id: string, data?: JoinCoffeeChatRequest) =>
     api.post<JoinCoffeeChatResponse>(config.API_ENDPOINTS.JOIN_COFFEE_CHAT(id), data),
 

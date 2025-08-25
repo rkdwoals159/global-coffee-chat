@@ -1,4 +1,4 @@
-// 커피챗 데이터 (실제로는 데이터베이스를 사용해야 합니다)
+// 트립챗 데이터 (실제로는 데이터베이스를 사용해야 합니다)
 export const coffeeChats = [
   {
     id: "1",
@@ -82,7 +82,7 @@ export const updateCoffeeChat = (id, updates) => {
 export const joinCoffeeChat = (id) => {
   const chat = data.find((chat) => chat.id === id);
   if (!chat || chat.status !== "open") {
-    return { success: false, message: "참여할 수 없는 커피챗입니다." };
+    return { success: false, message: "참여할 수 없는 트립챗입니다." };
   }
   if (chat.currentParticipants >= chat.maxParticipants) {
     chat.status = "full";

@@ -5,7 +5,7 @@ export const config = {
 
   // 사이트 정보
   SITE_NAME: process.env.REACT_APP_SITE_NAME || '트립챗',
-  SITE_DESCRIPTION: process.env.REACT_APP_SITE_DESCRIPTION || '해외 취업 커피챗 커뮤니티',
+  SITE_DESCRIPTION: process.env.REACT_APP_SITE_DESCRIPTION || '해외 교민 트립챗 커뮤니티',
 
   // 환경 설정
   ENV: process.env.REACT_APP_ENV || 'production',

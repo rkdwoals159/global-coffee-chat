@@ -36,7 +36,7 @@ const Home: React.FC = () => {
   const stats = [
     { number: "50+", label: "참여 국가", color: "text-blue-600" },
     { number: "200+", label: "성공 사례", color: "text-green-600" },
-    { number: "1000+", label: "커피챗 참여자", color: "text-purple-600" },
+    { number: "1000+", label: "트립챗 참여자", color: "text-purple-600" },
     { number: "95%", label: "만족도", color: "text-orange-600" },
   ];
 
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
               <span className="text-blue-600">해외 취업의 꿈</span>을 현실로
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-4xl mx-auto leading-relaxed">
-              해외에서 성공적으로 취업한 사람들과의 커피챗을 통해
+              해외에서 성공적으로 취업한 사람들과의 트립챗을 통해
               <br />
               현지 취업 노하우와 라이프스타일을 공유하는 커뮤니티입니다.
             </p>
@@ -68,13 +68,13 @@ const Home: React.FC = () => {
                 to="/coffee-chats"
                 className="btn btn-primary btn-large text-lg font-semibold transform hover:scale-105 transition-transform duration-200"
               >
-                커피챗 둘러보기
+                트립챗 둘러보기
               </Link>
               <Link
                 to="/create"
                 className="btn btn-secondary btn-large text-lg font-semibold transform hover:scale-105 transition-transform duration-200"
               >
-                커피챗 만들기
+                트립챗 만들기
               </Link>
             </div>
           </div>
@@ -145,7 +145,7 @@ const Home: React.FC = () => {
             to="/create"
             className="btn btn-primary btn-large text-xl font-semibold transform hover:scale-105 transition-transform duration-200 shadow-soft hover:shadow-xl"
           >
-            첫 커피챗 만들기
+            첫 트립챗 만들기
           </Link>
         </div>
       </section>

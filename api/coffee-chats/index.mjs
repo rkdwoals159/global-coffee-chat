@@ -15,13 +15,13 @@ export default function handler(req, res) {
     return;
   }
 
-  // GET 요청: 모든 커피챗 조회
+  // GET 요청: 모든 트립챗 조회
   if (req.method === "GET") {
     res.status(200).json(getCoffeeChats());
     return;
   }
 
-  // POST 요청: 새로운 커피챗 생성
+  // POST 요청: 새로운 트립챗 생성
   if (req.method === "POST") {
     try {
       const newChat = addCoffeeChat(req.body);

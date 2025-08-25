@@ -9,8 +9,8 @@ const Header: React.FC = () => {
 
   const navItems = [
     { path: "/", label: "홈", icon: "🏠" },
-    { path: "/coffee-chats", label: "커피챗 목록", icon: "☕" },
-    { path: "/create", label: "커피챗 만들기", icon: "✨" },
+    { path: "/coffee-chats", label: "트립챗 목록", icon: "☕" },
+    { path: "/create", label: "트립챗 만들기", icon: "✨" },
   ];
 
   return (

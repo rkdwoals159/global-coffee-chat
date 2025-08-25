@@ -14,7 +14,7 @@ export default function handler(req, res) {
     return;
   }
 
-  // GET 요청: 국가별 커피챗 조회
+  // GET 요청: 국가별 트립챗 조회
   if (req.method === "GET") {
     const coffeeChats = getCoffeeChats();
     const filteredChats = coffeeChats.filter(

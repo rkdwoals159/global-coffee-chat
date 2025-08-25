@@ -17,19 +17,19 @@ export default function handler(req, res) {
     return;
   }
 
-  // GET 요청: 특정 커피챗 조회
+  // GET 요청: 특정 트립챗 조회
   if (req.method === "GET") {
     const coffeeChat = getCoffeeChatById(id);
 
     if (!coffeeChat) {
-      return res.status(404).json({ message: "커피챗을 찾을 수 없습니다." });
+      return res.status(404).json({ message: "트립챗을 찾을 수 없습니다." });
     }
 
     res.json(coffeeChat);
     return;
   }
 
-  // POST 요청: 커피챗 참여
+  // POST 요청: 트립챗 참여
   if (req.method === "POST") {
     const result = joinCoffeeChat(id);
 

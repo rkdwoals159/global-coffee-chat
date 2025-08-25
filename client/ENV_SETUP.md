@@ -10,7 +10,7 @@
 # 트립챗 API 설정
 REACT_APP_API_BASE_URL=https://global-coffee-chat.vercel.app
 REACT_APP_SITE_NAME=트립챗
-REACT_APP_SITE_DESCRIPTION=해외 취업 커피챗 커뮤니티
+REACT_APP_SITE_DESCRIPTION=해외 취업 트립챗 커뮤니티
 
 # 개발 환경 설정
 REACT_APP_ENV=production
@@ -24,11 +24,13 @@ REACT_APP_OG_IMAGE_URL=https://global-coffee-chat.vercel.app/og-image.png
 ## 🔧 환경변수 설명
 
 ### 필수 환경변수
+
 - `REACT_APP_API_BASE_URL`: 백엔드 API의 기본 URL
 - `REACT_APP_SITE_NAME`: 사이트 이름
 - `REACT_APP_SITE_DESCRIPTION`: 사이트 설명
 
 ### 선택적 환경변수
+
 - `REACT_APP_ENV`: 환경 설정 (development/production)
 - `REACT_APP_VERSION`: 앱 버전
 - `REACT_APP_SITE_URL`: 사이트 URL

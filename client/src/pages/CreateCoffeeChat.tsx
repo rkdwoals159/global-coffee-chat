@@ -141,7 +141,7 @@ const CreateCoffeeChat: React.FC = () => {
 
       await coffeeChatAPI.create(coffeeChatData);
 
-      setSubmitMessage("커피챗이 성공적으로 생성되었습니다! 🎉");
+      setSubmitMessage("트립챗이 성공적으로 생성되었습니다! 🎉");
 
       // 2초 후 목록 페이지로 이동
       setTimeout(() => {
@@ -162,7 +162,7 @@ const CreateCoffeeChat: React.FC = () => {
         {/* 페이지 헤더 */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            ✈️ 새로운 트립챗 커피챗 만들기
+            ✈️ 새로운 트립챗 만들기
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             해외 취업에 성공한 경험을 공유하고 다른 사람들에게 도움을 주세요
@@ -195,7 +195,7 @@ const CreateCoffeeChat: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    커피챗 제목 *
+                    트립챗 제목 *
                   </label>
                   <input
                     type="text"
@@ -427,13 +427,13 @@ const CreateCoffeeChat: React.FC = () => {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    커피챗 설명 *
+                    트립챗 설명 *
                   </label>
                   <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    placeholder="커피챗에서 다룰 내용과 참여자들에게 도움이 될 정보를 자세히 설명해주세요"
+                    placeholder="트립챗에서 다룰 내용과 참여자들에게 도움이 될 정보를 자세히 설명해주세요"
                     rows={5}
                     className={`input ${
                       errors.description ? "border-red-500" : ""
@@ -484,7 +484,7 @@ const CreateCoffeeChat: React.FC = () => {
                 disabled={submitting}
                 className="btn btn-primary flex-1"
               >
-                {submitting ? "생성 중..." : "커피챗 만들기"}
+                {submitting ? "생성 중..." : "트립챗 만들기"}
               </button>
             </div>
           </form>

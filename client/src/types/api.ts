@@ -1,7 +1,7 @@
-// 커피챗 상태 타입
-export type CoffeeChatStatus = 'open' | 'full' | 'completed';
+// 트립챗 상태 타입
+export type CoffeeChatStatus = 'OPEN' | 'FULL' | 'COMPLETED';
 
-// 커피챗 기본 인터페이스
+// 트립챗 기본 인터페이스
 export interface CoffeeChat {
     id: string;
     title: string;
@@ -20,7 +20,7 @@ export interface CoffeeChat {
     status: CoffeeChatStatus;
 }
 
-// 커피챗 생성 요청 타입 (id, currentParticipants, status 제외)
+// 트립챗 생성 요청 타입 (id, currentParticipants, status 제외)
 export interface CreateCoffeeChatRequest {
     title: string;
     host: string;
@@ -36,16 +36,16 @@ export interface CreateCoffeeChatRequest {
     tags: string[];
 }
 
-// 커피챗 생성 응답 타입
+// 트립챗 생성 응답 타입
 export interface CreateCoffeeChatResponse extends CoffeeChat { }
 
-// 커피챗 참여 요청 타입
+// 트립챗 참여 요청 타입
 export interface JoinCoffeeChatRequest {
     participantName?: string;
     participantEmail?: string;
 }
 
-// 커피챗 참여 응답 타입
+// 트립챗 참여 응답 타입
 export interface JoinCoffeeChatResponse {
     success: boolean;
     message: string;

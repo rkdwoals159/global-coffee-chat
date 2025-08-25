@@ -35,31 +35,13 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// 커피챗 데이터 (실제로는 데이터베이스를 사용해야 합니다)
-interface CoffeeChat {
-    id: string;
-    title: string;
-    host: string;
-    country: string;
-    city: string;
-    job: string;
-    company: string;
-    experience: string;
-    date: string;
-    time: string;
-    maxParticipants: number;
-    currentParticipants: number;
-    description: string;
-    tags: string[];
-    status: 'OPEN' | 'FULL' | 'COMPLETED';
-}
 
 // CORS preflight 요청 처리
 app.options('*', cors());
 
 // API 엔드포인트
 
-// 모든 커피챗 조회
+// 모든 트립챗 조회
 app.get('/api/coffee-chats', async (req, res) => {
     try {
         const coffeeChats = await prisma.coffeeChat.findMany({
@@ -67,12 +49,12 @@ app.get('/api/coffee-chats', async (req, res) => {
         });
         res.json(coffeeChats);
     } catch (error) {
-        console.error('커피챗 조회 오류:', error);
+        console.error('트립챗 조회 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });
 
-// 특정 커피챗 조회
+// 특정 트립챗 조회
 app.get('/api/coffee-chats/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -81,17 +63,17 @@ app.get('/api/coffee-chats/:id', async (req, res) => {
         });
 
         if (!coffeeChat) {
-            return res.status(404).json({ message: '커피챗을 찾을 수 없습니다.' });
+            return res.status(404).json({ message: '트립챗을 찾을 수 없습니다.' });
         }
 
         res.json(coffeeChat);
     } catch (error) {
-        console.error('커피챗 조회 오류:', error);
+        console.error('트립챗 조회 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });
 
-// 새로운 커피챗 생성
+// 새로운 트립챗 생성
 app.post('/api/coffee-chats', async (req, res) => {
     try {
         const newChat = await prisma.coffeeChat.create({
@@ -104,12 +86,12 @@ app.post('/api/coffee-chats', async (req, res) => {
 
         res.status(201).json(newChat);
     } catch (error) {
-        console.error('커피챗 생성 오류:', error);
+        console.error('트립챗 생성 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });
 
-// 커피챗 참여
+// 트립챗 참여
 app.post('/api/coffee-chats/:id/join', async (req, res) => {
     try {
         const { id } = req.params;
@@ -118,11 +100,11 @@ app.post('/api/coffee-chats/:id/join', async (req, res) => {
         });
 
         if (!coffeeChat) {
-            return res.status(404).json({ message: '커피챗을 찾을 수 없습니다.' });
+            return res.status(404).json({ message: '트립챗을 찾을 수 없습니다.' });
         }
 
         if (coffeeChat.status !== 'OPEN') {
-            return res.status(400).json({ message: '참여할 수 없는 커피챗입니다.' });
+            return res.status(400).json({ message: '참여할 수 없는 트립챗입니다.' });
         }
 
         if (coffeeChat.currentParticipants >= coffeeChat.maxParticipants) {
@@ -139,12 +121,12 @@ app.post('/api/coffee-chats/:id/join', async (req, res) => {
 
         res.json(updatedChat);
     } catch (error) {
-        console.error('커피챗 참여 오류:', error);
+        console.error('트립챗 참여 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });
 
-// 국가별 커피챗 조회
+// 국가별 트립챗 조회
 app.get('/api/coffee-chats/country/:country', async (req, res) => {
     try {
         const { country } = req.params;
@@ -159,12 +141,12 @@ app.get('/api/coffee-chats/country/:country', async (req, res) => {
         });
         res.json(filteredChats);
     } catch (error) {
-        console.error('국가별 커피챗 조회 오류:', error);
+        console.error('국가별 트립챗 조회 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });
 
-// 직업별 커피챗 조회
+// 직업별 트립챗 조회
 app.get('/api/coffee-chats/job/:job', async (req, res) => {
     try {
         const { job } = req.params;
@@ -179,7 +161,7 @@ app.get('/api/coffee-chats/job/:job', async (req, res) => {
         });
         res.json(filteredChats);
     } catch (error) {
-        console.error('직업별 커피챗 조회 오류:', error);
+        console.error('직업별 트립챗 조회 오류:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 });

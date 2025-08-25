@@ -23,7 +23,7 @@ const CoffeeChatList: React.FC = () => {
           setError("데이터 형식이 올바르지 않습니다.");
         }
       } catch (err) {
-        setError("커피챗 목록을 불러오는데 실패했습니다.");
+        setError("트립챗 목록을 불러오는데 실패했습니다.");
         console.error("Error fetching coffee chats:", err);
       } finally {
         setLoading(false);
@@ -63,7 +63,7 @@ const CoffeeChatList: React.FC = () => {
               <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <h2 className="text-2xl font-semibold text-gray-900">
-              커피챗 목록을 불러오는 중...
+              트립챗 목록을 불러오는 중...
             </h2>
           </div>
         </div>
@@ -101,10 +101,10 @@ const CoffeeChatList: React.FC = () => {
         {/* 페이지 헤더 */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            ✈️ 트립챗 커피챗 목록
+            ✈️ 트립챗 목록
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            해외 취업에 성공한 사람들과의 커피챗에 참여해보세요
+            해외 취업에 성공한 사람들과의 트립챗에 참여해보세요
           </p>
         </div>
 
@@ -172,7 +172,7 @@ const CoffeeChatList: React.FC = () => {
           </div>
         </div>
 
-        {/* 커피챗 목록 */}
+        {/* 트립챗 목록 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredChats.map((chat) => (
             <div
@@ -261,15 +261,15 @@ const CoffeeChatList: React.FC = () => {
               <span className="text-4xl">☕</span>
             </div>
             <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-              커피챗이 없습니다
+              트립챗이 없습니다
             </h3>
             <p className="text-gray-600 mb-6">
               {searchTerm || selectedCountry || selectedJob
-                ? "검색 조건에 맞는 커피챗이 없습니다. 다른 조건으로 검색해보세요."
-                : "아직 등록된 커피챗이 없습니다. 첫 번째 커피챗을 만들어보세요!"}
+                ? "검색 조건에 맞는 트립챗이 없습니다. 다른 조건으로 검색해보세요."
+                : "아직 등록된 트립챗이 없습니다. 첫 번째 트립챗을 만들어보세요!"}
             </p>
             <Link to="/create" className="btn btn-primary">
-              커피챗 만들기
+              트립챗 만들기
             </Link>
           </div>
         )}

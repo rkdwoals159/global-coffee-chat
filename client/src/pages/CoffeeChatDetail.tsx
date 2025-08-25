@@ -23,8 +23,8 @@ const CoffeeChatDetail: React.FC = () => {
         const response = await coffeeChatAPI.getById(id);
         setCoffeeChat(response.data);
       } catch (err) {
-        setError("커피챗 정보를 불러오는 중 오류가 발생했습니다.");
-        console.error("커피챗 상세 조회 오류:", err);
+        setError("트립챗 정보를 불러오는 중 오류가 발생했습니다.");
+        console.error("트립챗 상세 조회 오류:", err);
       } finally {
         setLoading(false);
       }
@@ -42,7 +42,7 @@ const CoffeeChatDetail: React.FC = () => {
       if (response.data.chat) {
         setCoffeeChat(response.data.chat);
       }
-      setJoinMessage("커피챗에 성공적으로 참여했습니다! 🎉");
+      setJoinMessage("트립챗에 성공적으로 참여했습니다! 🎉");
 
       // 3초 후 메시지 제거
       setTimeout(() => setJoinMessage(null), 3000);
@@ -64,7 +64,7 @@ const CoffeeChatDetail: React.FC = () => {
               <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <h2 className="text-2xl font-semibold text-gray-900">
-              커피챗 정보를 불러오는 중...
+              트립챗 정보를 불러오는 중...
             </h2>
           </div>
         </div>
@@ -84,7 +84,7 @@ const CoffeeChatDetail: React.FC = () => {
               오류가 발생했습니다
             </h2>
             <p className="text-gray-600 mb-6">
-              {error || "커피챗을 찾을 수 없습니다."}
+              {error || "트립챗을 찾을 수 없습니다."}
             </p>
             <button
               onClick={() => navigate("/coffee-chats")}
@@ -120,7 +120,7 @@ const CoffeeChatDetail: React.FC = () => {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            <span>커피챗 목록으로</span>
+            <span>트립챗 목록으로</span>
           </button>
         </div>
 
@@ -140,12 +140,12 @@ const CoffeeChatDetail: React.FC = () => {
               <div className="ml-6">
                 <div
                   className={`badge ${
-                    coffeeChat.status === "open"
+                    coffeeChat.status === "OPEN"
                       ? "badge-success"
                       : "badge-warning"
                   }`}
                 >
-                  {coffeeChat.status === "open" ? "모집중" : "마감"}
+                  {coffeeChat.status === "OPEN" ? "모집중" : "마감"}
                 </div>
               </div>
             </div>
@@ -279,14 +279,14 @@ const CoffeeChatDetail: React.FC = () => {
 
         {/* 액션 버튼 */}
         <div className="flex flex-col sm:flex-row gap-4">
-          {coffeeChat.status === "open" &&
+          {coffeeChat.status === "OPEN" &&
           coffeeChat.currentParticipants < coffeeChat.maxParticipants ? (
             <button
               className="btn btn-primary btn-large flex-1"
               onClick={handleJoin}
               disabled={joining}
             >
-              {joining ? "참여 중..." : "커피챗 참여하기"}
+              {joining ? "참여 중..." : "트립챗 참여하기"}
             </button>
           ) : (
             <div className="flex-1 text-center py-4 bg-gray-100 rounded-lg">
