@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CoffeeChat {
+  id                  String   @id @default(cuid())
+  title               String
+  host                String
+  country             String
+  city                String
+  job                 String
+  company             String
+  experience          String
+  date                String
+  time                String
+  maxParticipants     Int
+  currentParticipants Int      @default(0)
+  description         String
+  tags                String[]
+  status              ChatStatus @default(OPEN)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+enum ChatStatus {
+  OPEN
+  FULL
+  COMPLETED
+}
