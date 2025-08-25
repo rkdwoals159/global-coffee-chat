@@ -3,12 +3,7 @@ services:
     name: tokyo-coffee-chats-api
     env: node
     plan: free
-    buildCommand: |
-      npm install
-      npm run db:generate
-      npm run db:reset
-      npm run db:deploy
-      npm run build
+    buildCommand: npm run render:build
     startCommand: npm start
     autoDeploy: true
     envVars:
