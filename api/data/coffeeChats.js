@@ -60,14 +60,19 @@ export const coffeeChats = [
 let data = [...coffeeChats];
 
 export const getCoffeeChats = () => [...data];
-export const getCoffeeChatById = (id) => data.find(chat => chat.id === id);
+export const getCoffeeChatById = (id) => data.find((chat) => chat.id === id);
 export const addCoffeeChat = (chat) => {
-  const newChat = { ...chat, id: Date.now().toString(), currentParticipants: 0, status: 'open' };
+  const newChat = {
+    ...chat,
+    id: Date.now().toString(),
+    currentParticipants: 0,
+    status: "open",
+  };
   data.push(newChat);
   return newChat;
 };
 export const updateCoffeeChat = (id, updates) => {
-  const index = data.findIndex(chat => chat.id === id);
+  const index = data.findIndex((chat) => chat.id === id);
   if (index !== -1) {
     data[index] = { ...data[index], ...updates };
     return data[index];
@@ -75,17 +80,17 @@ export const updateCoffeeChat = (id, updates) => {
   return null;
 };
 export const joinCoffeeChat = (id) => {
-  const chat = data.find(chat => chat.id === id);
-  if (!chat || chat.status !== 'open') {
-    return { success: false, message: '참여할 수 없는 커피챗입니다.' };
+  const chat = data.find((chat) => chat.id === id);
+  if (!chat || chat.status !== "open") {
+    return { success: false, message: "참여할 수 없는 커피챗입니다." };
   }
   if (chat.currentParticipants >= chat.maxParticipants) {
-    chat.status = 'full';
-    return { success: false, message: '참여 인원이 가득 찼습니다.' };
+    chat.status = "full";
+    return { success: false, message: "참여 인원이 가득 찼습니다." };
   }
   chat.currentParticipants += 1;
   if (chat.currentParticipants >= chat.maxParticipants) {
-    chat.status = 'full';
+    chat.status = "full";
   }
   return { success: true, chat };
 };
