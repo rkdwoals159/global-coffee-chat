@@ -101,8 +101,8 @@ const CoffeeChatList: React.FC = () => {
     <div className="coffee-chat-list">
       <div className="container">
         <div className="page-header">
-          <h1>커피챗 목록</h1>
-          <p>해외 취업에 대한 궁금한 점을 물어보세요</p>
+          <h1>✈️ 트립챗 커피챗 목록</h1>
+          <p>해외에서 성공적으로 취업한 사람들과의 커피챗을 찾아보세요</p>
         </div>
 
         <div className="filters">

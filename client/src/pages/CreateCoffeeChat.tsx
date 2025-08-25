@@ -179,8 +179,8 @@ const CreateCoffeeChat: React.FC = () => {
     <div className="create-coffee-chat">
       <div className="container">
         <div className="page-header">
-          <h1>새로운 커피챗 만들기</h1>
-          <p>해외 취업 경험을 나누고 싶은 분들을 위한 커피챗을 만들어보세요</p>
+          <h1>✈️ 새로운 트립챗 커피챗 만들기</h1>
+          <p>해외 취업 경험을 공유하고 다른 사람들에게 도움을 주세요</p>
         </div>
 
         <div className="form-container">
