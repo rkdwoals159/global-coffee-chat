@@ -17,7 +17,7 @@
     "db:studio": "prisma studio",
     "deploy:render": "git push origin main",
     "postinstall": "prisma generate",
-    "render:build": "npm install && npm run db:generate && npm run build",
+    "render:build": "npm install && npm run build",
     "client:install": "cd client && npm install",
     "client:start": "cd client && npm start",
     "client:build": "cd client && npm run build",
