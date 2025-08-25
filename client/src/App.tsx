@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { validateConfig } from './config/config';
-import Header from './components/Header';
-import Home from './pages/Home';
-import CoffeeChatList from './pages/CoffeeChatList';
-import CoffeeChatDetail from './pages/CoffeeChatDetail';
-import CreateCoffeeChat from './pages/CreateCoffeeChat';
-import './App.css';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { validateConfig } from "./config/config";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import CoffeeChatList from "./pages/CoffeeChatList";
+import CoffeeChatDetail from "./pages/CoffeeChatDetail";
+import CreateCoffeeChat from "./pages/CreateCoffeeChat";
+import "./App.css";
 
 function App() {
   useEffect(() => {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { coffeeChatAPI } from '../services/api';
-import './CoffeeChatList.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { coffeeChatAPI } from "../services/api";
+import "./CoffeeChatList.css";
 
 interface CoffeeChat {
   id: string;
@@ -26,21 +26,35 @@ const CoffeeChatList: React.FC = () => {
   const [filteredChats, setFilteredChats] = useState<CoffeeChat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedJob, setSelectedJob] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
 
   useEffect(() => {
     const fetchCoffeeChats = async () => {
       try {
         setLoading(true);
         const response = await coffeeChatAPI.getAll();
-        setCoffeeChats(response.data);
-        setFilteredChats(response.data);
-        setError(null);
+        
+        // 응답 데이터 구조 확인 및 안전한 처리
+        const data = response.data;
+        console.log('API 응답 데이터:', data);
+        
+        if (Array.isArray(data)) {
+          setCoffeeChats(data);
+          setFilteredChats(data);
+          setError(null);
+        } else {
+          console.error('API 응답이 배열이 아닙니다:', data);
+          setError('API 응답 데이터 형식이 올바르지 않습니다.');
+          setCoffeeChats([]);
+          setFilteredChats([]);
+        }
       } catch (err) {
         setError('커피챗 목록을 불러오는 중 오류가 발생했습니다.');
         console.error('커피챗 목록 조회 오류:', err);
+        setCoffeeChats([]);
+        setFilteredChats([]);
       } finally {
         setLoading(false);
       }
@@ -55,23 +69,24 @@ const CoffeeChatList: React.FC = () => {
 
       // 검색어 필터링
       if (searchTerm) {
-        filtered = filtered.filter(chat =>
-          chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          chat.host.toLowerCase().includes(searchTerm.toLowerCase())
+        filtered = filtered.filter(
+          (chat) =>
+            chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            chat.host.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
 
       // 국가 필터링
       if (selectedCountry) {
-        filtered = filtered.filter(chat =>
-          chat.country.toLowerCase() === selectedCountry.toLowerCase()
+        filtered = filtered.filter(
+          (chat) => chat.country.toLowerCase() === selectedCountry.toLowerCase()
         );
       }
 
       // 직업 필터링
       if (selectedJob) {
-        filtered = filtered.filter(chat =>
+        filtered = filtered.filter((chat) =>
           chat.job.toLowerCase().includes(selectedJob.toLowerCase())
         );
       }
@@ -83,8 +98,10 @@ const CoffeeChatList: React.FC = () => {
   }, [coffeeChats, searchTerm, selectedCountry, selectedJob]);
 
   // 고유한 국가와 직업 목록 생성
-  const countries = Array.from(new Set(coffeeChats.map(chat => chat.country)));
-  const jobs = Array.from(new Set(coffeeChats.map(chat => chat.job)));
+  const countries = Array.from(
+    new Set((coffeeChats || []).map((chat) => chat.country))
+  );
+  const jobs = Array.from(new Set((coffeeChats || []).map((chat) => chat.job)));
 
   if (loading) {
     return (
@@ -128,8 +145,10 @@ const CoffeeChatList: React.FC = () => {
               onChange={(e) => setSelectedCountry(e.target.value)}
             >
               <option value="">모든 국가</option>
-              {countries.map(country => (
-                <option key={country} value={country}>{country}</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
               ))}
             </select>
 
@@ -138,27 +157,29 @@ const CoffeeChatList: React.FC = () => {
               onChange={(e) => setSelectedJob(e.target.value)}
             >
               <option value="">모든 직업</option>
-              {jobs.map(job => (
-                <option key={job} value={job}>{job}</option>
+              {jobs.map((job) => (
+                <option key={job} value={job}>
+                  {job}
+                </option>
               ))}
             </select>
           </div>
         </div>
 
         <div className="results-info">
-          <p>총 {filteredChats.length}개의 커피챗을 찾았습니다.</p>
+          <p>총 {(filteredChats || []).length}개의 커피챗을 찾았습니다.</p>
         </div>
 
         <div className="coffee-chats-grid">
-          {filteredChats.map(chat => (
+          {(filteredChats || []).map((chat) => (
             <div key={chat.id} className="coffee-chat-card">
               <div className="card-header">
                 <h3>{chat.title}</h3>
                 <span className={`status-badge ${chat.status}`}>
-                  {chat.status === 'open' ? '모집중' : '마감'}
+                  {chat.status === "open" ? "모집중" : "마감"}
                 </span>
               </div>
-              
+
               <div className="card-content">
                 <div className="host-info">
                   <strong>호스트:</strong> {chat.host} ({chat.experience})
@@ -173,18 +194,24 @@ const CoffeeChatList: React.FC = () => {
                   <strong>일시:</strong> {chat.date} {chat.time}
                 </div>
                 <div className="participants-info">
-                  <strong>참여자:</strong> {chat.currentParticipants}/{chat.maxParticipants}명
+                  <strong>참여자:</strong> {chat.currentParticipants}/
+                  {chat.maxParticipants}명
                 </div>
                 <p className="description">{chat.description}</p>
                 <div className="tags">
-                  {chat.tags.map(tag => (
-                    <span key={tag} className="tag">{tag}</span>
+                  {chat.tags.map((tag) => (
+                    <span key={tag} className="tag">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
-              
+
               <div className="card-actions">
-                <Link to={`/coffee-chats/${chat.id}`} className="btn btn-primary">
+                <Link
+                  to={`/coffee-chats/${chat.id}`}
+                  className="btn btn-primary"
+                >
                   자세히 보기
                 </Link>
               </div>
@@ -192,7 +219,7 @@ const CoffeeChatList: React.FC = () => {
           ))}
         </div>
 
-        {filteredChats.length === 0 && (
+        {(filteredChats || []).length === 0 && (
           <div className="no-results">
             <p>검색 조건에 맞는 커피챗이 없습니다.</p>
             <p>검색어나 필터를 변경해보세요.</p>

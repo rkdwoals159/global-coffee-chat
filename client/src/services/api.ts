@@ -26,6 +26,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => {
     console.log(`✅ API 응답: ${response.status} ${response.config.url}`);
+    console.log('응답 데이터:', response.data);
     return response;
   },
   (error) => {
