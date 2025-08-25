@@ -1,8 +1,1 @@
-{
-  "functions": {
-    "api/coffee-chats/index.mjs": {},
-    "api/coffee-chats/[id].mjs": {},
-    "api/coffee-chats/country/[country].mjs": {},
-    "api/coffee-chats/job/[job].mjs": {}
-  }
-}
+{}

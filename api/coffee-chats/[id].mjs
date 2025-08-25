@@ -1,4 +1,4 @@
-import { getCoffeeChatById, joinCoffeeChat } from '../data/coffeeChats.mjs';
+import { getCoffeeChatById, joinCoffeeChat } from "../data/coffeeChats.mjs";
 
 export default function handler(req, res) {
   const { id } = req.query;
@@ -20,11 +20,11 @@ export default function handler(req, res) {
   // GET 요청: 특정 커피챗 조회
   if (req.method === "GET") {
     const coffeeChat = getCoffeeChatById(id);
-    
+
     if (!coffeeChat) {
       return res.status(404).json({ message: "커피챗을 찾을 수 없습니다." });
     }
-    
+
     res.json(coffeeChat);
     return;
   }
@@ -32,11 +32,11 @@ export default function handler(req, res) {
   // POST 요청: 커피챗 참여
   if (req.method === "POST") {
     const result = joinCoffeeChat(id);
-    
+
     if (!result.success) {
       return res.status(400).json({ message: result.message });
     }
-    
+
     res.json(result.chat);
     return;
   }

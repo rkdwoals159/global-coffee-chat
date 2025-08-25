@@ -1,4 +1,4 @@
-import { getCoffeeChats } from '../../data/coffeeChats.mjs';
+import { getCoffeeChats } from "../../data/coffeeChats.mjs";
 
 export default function handler(req, res) {
   const { country } = req.query;
