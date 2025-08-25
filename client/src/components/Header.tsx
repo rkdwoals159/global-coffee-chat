@@ -23,11 +23,13 @@ const Header: React.FC = () => {
             <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-yellow-500 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
               <span className="text-2xl">✈️</span>
             </div>
-            <div className="hidden sm:block">
+            <div className="">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-yellow-500 bg-clip-text text-transparent">
                 트립챗
               </h1>
-              <p className="text-xs text-gray-500 -mt-1">해외 취업 커뮤니티</p>
+              <p className="hidden sm:block text-xs text-gray-500 -mt-1">
+                해외 취업 커뮤니티
+              </p>
             </div>
           </Link>
 
