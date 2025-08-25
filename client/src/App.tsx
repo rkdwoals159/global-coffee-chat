@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import CoffeeChatList from "./pages/CoffeeChatList";
 import CoffeeChatDetail from "./pages/CoffeeChatDetail";
 import CreateCoffeeChat from "./pages/CreateCoffeeChat";
-import "./App.css";
 
 function App() {
   useEffect(() => {

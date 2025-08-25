@@ -1,29 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { coffeeChatAPI } from "../services/api";
-import "./CoffeeChatList.css";
-
-interface CoffeeChat {
-  id: string;
-  title: string;
-  host: string;
-  country: string;
-  city: string;
-  job: string;
-  company: string;
-  experience: string;
-  date: string;
-  time: string;
-  maxParticipants: number;
-  currentParticipants: number;
-  description: string;
-  tags: string[];
-  status: string;
-}
+import { CoffeeChat } from "../types/api";
 
 const CoffeeChatList: React.FC = () => {
   const [coffeeChats, setCoffeeChats] = useState<CoffeeChat[]>([]);
-  const [filteredChats, setFilteredChats] = useState<CoffeeChat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,26 +16,15 @@ const CoffeeChatList: React.FC = () => {
       try {
         setLoading(true);
         const response = await coffeeChatAPI.getAll();
-
-        // 응답 데이터 구조 확인 및 안전한 처리
         const data = response.data;
-        console.log("API 응답 데이터:", data);
-
         if (Array.isArray(data)) {
           setCoffeeChats(data);
-          setFilteredChats(data);
-          setError(null);
         } else {
-          console.error("API 응답이 배열이 아닙니다:", data);
-          setError("API 응답 데이터 형식이 올바르지 않습니다.");
-          setCoffeeChats([]);
-          setFilteredChats([]);
+          setError("데이터 형식이 올바르지 않습니다.");
         }
       } catch (err) {
-        setError("커피챗 목록을 불러오는 중 오류가 발생했습니다.");
-        console.error("커피챗 목록 조회 오류:", err);
-        setCoffeeChats([]);
-        setFilteredChats([]);
+        setError("커피챗 목록을 불러오는데 실패했습니다.");
+        console.error("Error fetching coffee chats:", err);
       } finally {
         setLoading(false);
       }
@@ -63,154 +33,219 @@ const CoffeeChatList: React.FC = () => {
     fetchCoffeeChats();
   }, []);
 
-  useEffect(() => {
-    const filterChats = () => {
-      let filtered = coffeeChats;
+  const filterChats = () => {
+    return coffeeChats.filter((chat) => {
+      const matchesSearch =
+        chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chat.host.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCountry =
+        !selectedCountry || chat.country === selectedCountry;
+      const matchesJob = !selectedJob || chat.job === selectedJob;
 
-      // 검색어 필터링
-      if (searchTerm) {
-        filtered = filtered.filter(
-          (chat) =>
-            chat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            chat.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            chat.host.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
+      return matchesSearch && matchesCountry && matchesJob;
+    });
+  };
 
-      // 국가 필터링
-      if (selectedCountry) {
-        filtered = filtered.filter(
-          (chat) => chat.country.toLowerCase() === selectedCountry.toLowerCase()
-        );
-      }
+  const filteredChats = filterChats();
 
-      // 직업 필터링
-      if (selectedJob) {
-        filtered = filtered.filter((chat) =>
-          chat.job.toLowerCase().includes(selectedJob.toLowerCase())
-        );
-      }
-
-      setFilteredChats(filtered);
-    };
-
-    filterChats();
-  }, [coffeeChats, searchTerm, selectedCountry, selectedJob]);
-
-  // 고유한 국가와 직업 목록 생성
   const countries = Array.from(
-    new Set((coffeeChats || []).map((chat) => chat.country))
+    new Set(coffeeChats.map((chat) => chat.country))
   );
-  const jobs = Array.from(new Set((coffeeChats || []).map((chat) => chat.job)));
+  const jobs = Array.from(new Set(coffeeChats.map((chat) => chat.job)));
 
   if (loading) {
     return (
-      <div className="loading">
-        <div className="spinner"></div>
-        <p>커피챗 목록을 불러오는 중...</p>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+              <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-900">
+              커피챗 목록을 불러오는 중...
+            </h2>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="error">
-        <p>❌ {error}</p>
-        <button onClick={() => window.location.reload()}>다시 시도</button>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+              <span className="text-2xl">⚠️</span>
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+              오류가 발생했습니다
+            </h2>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="btn btn-primary"
+            >
+              다시 시도
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="coffee-chat-list">
-      <div className="container">
-        <div className="page-header">
-          <h1>✈️ 트립챗 커피챗 목록</h1>
-          <p>해외에서 성공적으로 취업한 사람들과의 커피챗을 찾아보세요</p>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 페이지 헤더 */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            ✈️ 트립챗 커피챗 목록
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            해외 취업에 성공한 사람들과의 커피챗에 참여해보세요
+          </p>
         </div>
 
-        <div className="filters">
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="제목, 설명, 호스트로 검색..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        {/* 검색 및 필터 */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                검색
+              </label>
+              <input
+                type="text"
+                placeholder="제목, 설명, 호스트로 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="input"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                국가
+              </label>
+              <select
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="select"
+              >
+                <option value="">모든 국가</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                직업
+              </label>
+              <select
+                value={selectedJob}
+                onChange={(e) => setSelectedJob(e.target.value)}
+                className="select"
+              >
+                <option value="">모든 직업</option>
+                {jobs.map((job) => (
+                  <option key={job} value={job}>
+                    {job}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-end">
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedCountry("");
+                  setSelectedJob("");
+                }}
+                className="btn btn-secondary w-full"
+              >
+                필터 초기화
+              </button>
+            </div>
           </div>
-
-          <div className="filter-options">
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-            >
-              <option value="">모든 국가</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={selectedJob}
-              onChange={(e) => setSelectedJob(e.target.value)}
-            >
-              <option value="">모든 직업</option>
-              {jobs.map((job) => (
-                <option key={job} value={job}>
-                  {job}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
-        <div className="results-info">
-          <p>총 {(filteredChats || []).length}개의 커피챗을 찾았습니다.</p>
-        </div>
+        {/* 커피챗 목록 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredChats.map((chat) => (
+            <div
+              key={chat.id}
+              className="card group hover:shadow-xl transition-all duration-300"
+            >
+              <div className="p-6">
+                {/* 헤더 */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200">
+                      {chat.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {chat.description}
+                    </p>
+                  </div>
+                  <div className="w-3 h-3 rounded-full ml-2 bg-green-500"></div>
+                </div>
 
-        <div className="coffee-chats-grid">
-          {(filteredChats || []).map((chat) => (
-            <div key={chat.id} className="coffee-chat-card">
-              <div className="card-header">
-                <h3>{chat.title}</h3>
-                <span className={`status-badge ${chat.status}`}>
-                  {chat.status === "open" ? "모집중" : "마감"}
-                </span>
-              </div>
-
-              <div className="card-content">
-                <div className="host-info">
-                  <strong>호스트:</strong> {chat.host} ({chat.experience})
-                </div>
-                <div className="location-info">
-                  <strong>위치:</strong> {chat.country}, {chat.city}
-                </div>
-                <div className="job-info">
-                  <strong>직업:</strong> {chat.job} @ {chat.company}
-                </div>
-                <div className="meeting-info">
-                  <strong>일시:</strong> {chat.date} {chat.time}
-                </div>
-                <div className="participants-info">
-                  <strong>참여자:</strong> {chat.currentParticipants}/
-                  {chat.maxParticipants}명
-                </div>
-                <p className="description">{chat.description}</p>
-                <div className="tags">
-                  {chat.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
+                {/* 메타 정보 */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-5 h-5 mr-2">🌍</span>
+                    <span>{chat.country}</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-5 h-5 mr-2">💼</span>
+                    <span>{chat.job}</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-5 h-5 mr-2">👤</span>
+                    <span>{chat.host}</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-5 h-5 mr-2">📅</span>
+                    <span>
+                      {chat.date} {chat.time}
                     </span>
-                  ))}
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-5 h-5 mr-2">📍</span>
+                    <span>
+                      {chat.city}, {chat.country}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="card-actions">
+                {/* 참여자 정보 */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-600">참여자:</span>
+                    <span className="text-sm font-medium text-blue-600">
+                      {chat.currentParticipants}/{chat.maxParticipants}
+                    </span>
+                  </div>
+                  <div
+                    className={`badge ${
+                      chat.currentParticipants >= chat.maxParticipants
+                        ? "badge-warning"
+                        : "badge-success"
+                    }`}
+                  >
+                    {chat.currentParticipants >= chat.maxParticipants
+                      ? "마감"
+                      : "모집중"}
+                  </div>
+                </div>
+
+                {/* 액션 버튼 */}
                 <Link
                   to={`/coffee-chats/${chat.id}`}
-                  className="btn btn-primary"
+                  className="btn btn-primary w-full group-hover:bg-blue-700 transition-colors duration-200"
                 >
                   자세히 보기
                 </Link>
@@ -219,10 +254,23 @@ const CoffeeChatList: React.FC = () => {
           ))}
         </div>
 
-        {(filteredChats || []).length === 0 && (
-          <div className="no-results">
-            <p>검색 조건에 맞는 커피챗이 없습니다.</p>
-            <p>검색어나 필터를 변경해보세요.</p>
+        {/* 빈 상태 */}
+        {filteredChats.length === 0 && (
+          <div className="text-center py-16">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
+              <span className="text-4xl">☕</span>
+            </div>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+              커피챗이 없습니다
+            </h3>
+            <p className="text-gray-600 mb-6">
+              {searchTerm || selectedCountry || selectedJob
+                ? "검색 조건에 맞는 커피챗이 없습니다. 다른 조건으로 검색해보세요."
+                : "아직 등록된 커피챗이 없습니다. 첫 번째 커피챗을 만들어보세요!"}
+            </p>
+            <Link to="/create" className="btn btn-primary">
+              커피챗 만들기
+            </Link>
           </div>
         )}
       </div>
