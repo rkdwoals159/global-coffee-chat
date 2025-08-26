@@ -1696,6 +1696,12 @@ h6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+  .sm\:table-cell {
+    display: table-cell;
+  }
+  .sm\:table-header-group {
+    display: table-header-group;
+  }
 }
 
 @media (min-width: 768px) {
